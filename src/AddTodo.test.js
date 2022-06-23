@@ -72,12 +72,17 @@ test('test that App component can be deleted thru checkbox', () => {
 
 test('test that App component renders different colors for past due events', () => {
   render(<App />);
-  const inputTask = screen.getByRole('textbox', { name: /Add New Item/i });
-  const inputDate = screen.getByPlaceholderText("mm/dd/yyyy");
+  const inputTask = screen.getByRole('textbox', { name: /Add New Item/i })
+  const inputDate = screen.getByPlaceholderText("mm/dd/yyyy")
   const element = screen.getByRole('button', { name: /Add/i });
-  fireEvent.change(inputTask, { target: { value: "Programming Exam" } });
-  fireEvent.change(inputDate, { target: { value: "05/30/2021" } });
-  fireEvent.click(element);
+  fireEvent.change(inputTask, { target: { value: "History Test" } })
+  fireEvent.change(inputDate, { target: { value: "05/30/2023" } })
+  fireEvent.click(element)
+  fireEvent.change(inputTask, { target: { value: "Programming Exam" } })
+  fireEvent.change(inputDate, { target: { value: "05/30/2021" } })
+  fireEvent.click(element)
+  const historyCheck = screen.getByTestId(/History Test/i).style.background
   const progCheck = screen.getByTestId(/Programming Exam/i).style.background
-  expect(progCheck).toHaveStyle('background:#9DD6DF'); // color for past events
+  expect(progCheck == historyCheck).toBe(false);
+
 });
